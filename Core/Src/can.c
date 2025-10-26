@@ -96,6 +96,7 @@ void MX_CAN1_Init(void)
 
 }
 
+static uint32_t HAL_RCC_CAN1_CLK_ENABLED=0;
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 {
 

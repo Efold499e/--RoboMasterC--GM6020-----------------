@@ -31,3 +31,4 @@ mx_test\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 mx_test\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 mx_test\main.o: ../Core/Inc/can.h
 mx_test\main.o: ../Core/Inc/gpio.h
+mx_test\main.o: E:\SUSTechLearn\KeilMDK\ARM\ARMCC\Bin\..\include\string.h

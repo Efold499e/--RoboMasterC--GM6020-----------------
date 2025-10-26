@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -125,6 +125,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
    
   /* USER CODE END 3 */
+	}
 }
 
 /**
