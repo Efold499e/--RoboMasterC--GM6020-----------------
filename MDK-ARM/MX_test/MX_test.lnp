@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp.sp
+"mx_test\startup_stm32f407xx.o"
+"mx_test\main.o"
+"mx_test\gpio.o"
+"mx_test\can.o"
+"mx_test\stm32f4xx_it.o"
+"mx_test\stm32f4xx_hal_msp.o"
+"mx_test\stm32f4xx_hal_can.o"
+"mx_test\stm32f4xx_hal_rcc.o"
+"mx_test\stm32f4xx_hal_rcc_ex.o"
+"mx_test\stm32f4xx_hal_flash.o"
+"mx_test\stm32f4xx_hal_flash_ex.o"
+"mx_test\stm32f4xx_hal_flash_ramfunc.o"
+"mx_test\stm32f4xx_hal_gpio.o"
+"mx_test\stm32f4xx_hal_dma_ex.o"
+"mx_test\stm32f4xx_hal_dma.o"
+"mx_test\stm32f4xx_hal_pwr.o"
+"mx_test\stm32f4xx_hal_pwr_ex.o"
+"mx_test\stm32f4xx_hal_cortex.o"
+"mx_test\stm32f4xx_hal.o"
+"mx_test\stm32f4xx_hal_exti.o"
+"mx_test\system_stm32f4xx.o"
+--strict --scatter "MX_test\MX_test.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "MX_test.map" -o MX_test\MX_test.axf
