@@ -89,8 +89,31 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
+  while (1)
+  {
+    /* 发送一帧 0x11..0x11 */
+    (void)CAN1_Send_All11();
 
-  HAL_CAN_Start( &hcan1 ); // 启动CAN
+    /* 等待 500 ms（可按需调整） */
+    HAL_Delay(5);
+
+    /* 如有新接收数据，快速复制到本地并清标志（临界区保护） */
+    if (CAN1_RxNewFlag)
+    {
+      uint8_t local_buf[8];
+      uint32_t local_id;
+      uint8_t local_dlc;
+
+      __disable_irq();
+      memcpy(local_buf, (const void *)CAN1_RxData, 8);
+      local_id = CAN1_RxId;
+      local_dlc = CAN1_RxDLC;
+      CAN1_RxNewFlag = 0;
+      __enable_irq();
+
+      /* TODO: 在这里处理 local_buf (长度 local_dlc, ID local_id) */
+    }
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,32 +123,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    CAN_HandleTypeDef *hcan = &hcan1; // 使用已经初始化的CAN_HandleTypeDef结构体
-    CAN_TxHeaderTypeDef txMessage;
-    uint8_t txData[8];        // 定义一个8字节的数据缓冲区
-    uint32_t transmitMailbox; // 定义transmitMailbox变量
-    // 设置消息头
-    txMessage.StdId = 0x1FF;
-    txMessage.IDE = CAN_ID_STD;
-    txMessage.RTR = CAN_RTR_DATA;
-    txMessage.DLC = 0x08;
-    // 设置数据
-    txData[0] = 0x11;
-    txData[1] = 0x11;
-    txData[2] = 0x11;
-    txData[3] = 0x11;
-    txData[4] = 0x11;
-    txData[5] = 0x11;
-    txData[6] = 0x11;
-    txData[7] = 0x11;
-    // 开始CAN传输并检查返回值
-    if (HAL_CAN_AddTxMessage(hcan, &txMessage, txData, &transmitMailbox) != HAL_OK)
-    {
-      // 处理错误
-      Error_Handler();
-    }
-    HAL_Delay(1); // 添加一个小延迟，避免过于频繁的发送
-  }
+   
   /* USER CODE END 3 */
 }
 
