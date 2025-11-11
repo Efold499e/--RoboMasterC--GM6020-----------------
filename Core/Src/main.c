@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_can.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern moto_info_t motor_info[MOTOR_MAX_NUM];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,20 +89,10 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
-  can_user_init(&hcan1);
-  for (int i = 0; i < MOTOR_MAX_NUM; i++)
-  {
-    motor_info[i].can_id = 0;
-    motor_info[i].set_voltage = 0x1111;
-  }
   while (1)
   {
     /* 发送一帧 0x11..0x11 */
-    set_motor_voltage(1,
-                      motor_info[0].set_voltage,
-                      motor_info[1].set_voltage,
-                      motor_info[2].set_voltage,
-                      motor_info[3].set_voltage);
+    CAN1_Send_All11();
 
     /* 等待 500 ms（可按需调整） */
     HAL_Delay(5);
@@ -111,34 +101,28 @@ int main(void)
     if (CAN1_RxNewFlag)
     {
       uint8_t local_buf[8];
-      uint16_t local_id;
+      uint32_t local_id;
       uint8_t local_dlc;
 
-
+      __disable_irq();
       memcpy(local_buf, (const void *)CAN1_RxData, 8);
       local_id = CAN1_RxId;
       local_dlc = CAN1_RxDLC;
       CAN1_RxNewFlag = 0;
+      __enable_irq();
 
       /* TODO: 在这里处理 local_buf (长度 local_dlc, ID local_id) */
-    if (local_dlc == 8){
-      uint8_t index = (uint8_t)local_id - FEEDBACK_ID_BASE;                  // get motor index by can_id
-      motor_info[index].can_id         = local_id;
-      motor_info[index].set_voltage        = 0x1111;
-      motor_info[index].rotor_angle    = ((local_buf[0] << 8) | local_buf[1]);
-      motor_info[index].rotor_speed    = ((local_buf[2] << 8) | local_buf[3]);
-      motor_info[index].torque_current = ((local_buf[4] << 8) | local_buf[5]);
-      motor_info[index].temp           =   local_buf[6];
-      }
     }
   }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+  
   /* USER CODE END 3 */
 }
 

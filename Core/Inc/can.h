@@ -35,13 +35,16 @@ extern "C" {
 extern CAN_HandleTypeDef hcan1;
 
 /* USER CODE BEGIN Private defines */
-
+extern volatile uint8_t CAN1_RxData[8];
+extern volatile uint32_t CAN1_RxId;
+extern volatile uint8_t CAN1_RxDLC;
+extern volatile uint8_t CAN1_RxNewFlag;
 /* USER CODE END Private defines */
 
 void MX_CAN1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+HAL_StatusTypeDef CAN1_Send_All11(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
