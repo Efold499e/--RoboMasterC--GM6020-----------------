@@ -63,6 +63,12 @@
     "string.h": "c",
     "stm32f4xx_hal.h": "c",
     "cstdlib": "c",
-    "stm32f4xx_hal_def.h": "c"
+    "stm32f4xx_hal_def.h": "c",
+    "bit": "c",
+    "compare": "c",
+    "limits": "c",
+    "new": "c",
+    "stm32f4xx_hal_dfsdm.h": "c",
+    "stm32f4xx_hal_lptim.h": "c"
   }
 }

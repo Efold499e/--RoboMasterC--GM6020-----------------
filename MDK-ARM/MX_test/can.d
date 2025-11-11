@@ -1,4 +1,5 @@
 mx_test\can.o: ..\Core\Src\can.c
+mx_test\can.o: E:\SUSTechLearn\KeilMDK\ARM\ARMCC\Bin\..\include\string.h
 mx_test\can.o: ../Core/Inc/can.h
 mx_test\can.o: ../Core/Inc/main.h
 mx_test\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
@@ -30,4 +31,3 @@ mx_test\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 mx_test\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 mx_test\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 mx_test\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
-mx_test\can.o: E:\SUSTechLearn\KeilMDK\ARM\ARMCC\Bin\..\include\string.h
