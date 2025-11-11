@@ -35,18 +35,16 @@ extern "C" {
 extern CAN_HandleTypeDef hcan1;
 
 /* USER CODE BEGIN Private defines */
-
-/* USER CODE END Private defines */
-
-void MX_CAN1_Init(void);
-/* 发送与接收全局变量/函数（在 can.c 的 USER CODE 区定义） */
-HAL_StatusTypeDef CAN1_Send_All11(void);
 extern volatile uint8_t CAN1_RxData[8];
 extern volatile uint32_t CAN1_RxId;
 extern volatile uint8_t CAN1_RxDLC;
 extern volatile uint8_t CAN1_RxNewFlag;
-/* USER CODE BEGIN Prototypes */
+/* USER CODE END Private defines */
 
+void MX_CAN1_Init(void);
+
+/* USER CODE BEGIN Prototypes */
+HAL_StatusTypeDef CAN1_Send_All11(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

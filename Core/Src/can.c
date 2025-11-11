@@ -16,12 +16,13 @@
   *
   ******************************************************************************
   */
+#include <string.h>
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "can.h"
 
 /* USER CODE BEGIN 0 */
-#include <string.h>
+
 
 /*
  * 全局接收缓存：当收到 CAN1 的一帧数据时，会把数据保存到 `CAN1_RxData`，
@@ -96,7 +97,6 @@ void MX_CAN1_Init(void)
 
 }
 
-static uint32_t HAL_RCC_CAN1_CLK_ENABLED=0;
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 {
 
@@ -107,10 +107,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 
   /* USER CODE END CAN1_MspInit 0 */
     /* CAN1 clock enable */
-    HAL_RCC_CAN1_CLK_ENABLED++;
-    if(HAL_RCC_CAN1_CLK_ENABLED==1){
-      __HAL_RCC_CAN1_CLK_ENABLE();
-    }
+    __HAL_RCC_CAN1_CLK_ENABLE();
 
     __HAL_RCC_GPIOD_CLK_ENABLE();
     /**CAN1 GPIO Configuration
@@ -144,10 +141,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 
   /* USER CODE END CAN1_MspDeInit 0 */
     /* Peripheral clock disable */
-    HAL_RCC_CAN1_CLK_ENABLED--;
-    if(HAL_RCC_CAN1_CLK_ENABLED==0){
-      __HAL_RCC_CAN1_CLK_DISABLE();
-    }
+    __HAL_RCC_CAN1_CLK_DISABLE();
 
     /**CAN1 GPIO Configuration
     PD0     ------> CAN1_RX
@@ -174,7 +168,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 HAL_StatusTypeDef CAN1_Send_All11(void)
 {
   CAN_TxHeaderTypeDef txHeader;
-  uint8_t txData[8] = {0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
+  uint8_t txData[8] = {0x11,0x11,0xF0,0xF0,0x11,0x11,0x11,0x11};//try 0x80&0x79
   uint32_t txMailbox = 0;
 
   txHeader.StdId = 0x1FF; /* <-- 根据实际总线协议修改 */
